@@ -27,7 +27,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
+
 	implementation 'org.liquibase:liquibase-core'
+	runtimeOnly 'org.springframework.boot:spring-boot-starter-jdbc'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.r2dbc:r2dbc-h2'
