@@ -24,13 +24,14 @@ public class FileChecksum implements Checksum {
 
     @Override
     public Mono<byte[]> calculate(FilePart part) {
+        LOGGER.info("Inside of {}", FileChecksum.class.getName());
         if (Objects.isNull(part)) {
             return Mono.error(() -> {
                 LOGGER.error("filePart param is empty");
                 return new IllegalArgumentException("filePart param is empty");
             });
         }
-        return part.content().log()
+        return part.content()
                 .map(dataBuffer -> {
                     try {
                         MessageDigest messageDigest = MessageDigest.getInstance(algorithm);

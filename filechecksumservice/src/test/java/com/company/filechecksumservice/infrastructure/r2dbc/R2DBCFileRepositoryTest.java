@@ -31,6 +31,7 @@ public class R2DBCFileRepositoryTest {
                 .withDatabaseName("file-checksum-file-repository")
                 .withUsername("testUser")
                 .withPassword("testPassword");
+        postgresContainer.start();
     }
 
     @DynamicPropertySource

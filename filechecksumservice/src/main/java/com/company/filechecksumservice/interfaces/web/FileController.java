@@ -1,6 +1,7 @@
 package com.company.filechecksumservice.interfaces.web;
 
 import com.company.filechecksumservice.interfaces.facade.FileFacade;
+import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,16 @@ public class FileController {
         this.fileFacade = fileFacade;
     }
 
-    // do not forget to secure endpoints
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('API_CONSUMER')")
     public Mono<Void> load(@RequestPart("files") Flux<FilePart> filePartFlux) {
+        LOGGER.info("Load file executed");
         return filePartFlux
                 .doOnNext(fileFacade::load)
                 .doOnError(throwable -> LOGGER.error("Error occurred during loading file, message: {} ", throwable.getMessage()))
-                .then();
+                .thenEmpty(Subscriber::onComplete);
+
     }
 
 
