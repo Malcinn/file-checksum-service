@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 public class TestFilechecksumserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.from(FilechecksumserviceApplication::main).with(TestcontainersConfiguration.class).run(args);
+		SpringApplication.from(FilechecksumserviceApplication::main).run(args);
 	}
 
 }

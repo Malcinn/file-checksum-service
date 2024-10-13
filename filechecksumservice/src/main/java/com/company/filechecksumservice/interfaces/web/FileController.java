@@ -10,10 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.codec.multipart.Part;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -32,6 +29,7 @@ public class FileController {
 
     // do not forget to secure endpoints
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    //@ResponseStatus
     public Mono<ResponseEntity<String>> load(@RequestPart("files") Flux<FilePart> filePartFlux) {
         return filePartFlux
                 .doOnNext(fileFacade::load)

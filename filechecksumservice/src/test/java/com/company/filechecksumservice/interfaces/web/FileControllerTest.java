@@ -1,6 +1,5 @@
 package com.company.filechecksumservice.interfaces.web;
 
-import com.company.filechecksumservice.TestcontainersConfiguration;
 import com.company.filechecksumservice.interfaces.facade.FileFacade;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,12 +11,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.io.StreamCorruptedException;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(TestcontainersConfiguration.class)
+@ActiveProfiles("tc")
 public class FileControllerTest {
 
     private final static String FILE_API = "/api/file";

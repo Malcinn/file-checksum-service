@@ -6,13 +6,14 @@
 
     <changeSet id="create_table_file_1" author="marcinkowalczyk1992@gmail.com">
         <createTable tableName="file">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)"/>
             <column name="size" type="bigint"/>
             <column name="checksum" type="varchar(100)"/>
         </createTable>
+
     </changeSet>
 
 </databaseChangeLog>

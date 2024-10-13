@@ -25,7 +25,7 @@ public class DefaultFileService implements FileService {
     public Mono<File> save(FilePart filePart) {
         return checksum.calculate(filePart)
                 .zipWith(getFileSize(filePart), (checksum, fileSize) ->
-                        new File(null, filePart.name(), fileSize, HexFormat.of().formatHex(checksum).toCharArray()))
+                        new File(null, filePart.name(), fileSize, HexFormat.of().formatHex(checksum)))
                 .map(fileRepository::store)
                 .flatMap(file -> file);
     }
