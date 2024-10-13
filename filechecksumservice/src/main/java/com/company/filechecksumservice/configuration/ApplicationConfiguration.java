@@ -14,8 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @Configuration
+@EnableR2dbcRepositories(basePackages = "com.company.filechecksumservice.infrastructure.r2dbc")
 @PropertySource("classpath:application.properties")
 public class ApplicationConfiguration {
 

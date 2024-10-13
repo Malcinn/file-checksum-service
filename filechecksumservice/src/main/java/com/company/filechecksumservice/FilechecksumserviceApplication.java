@@ -1,14 +1,14 @@
 package com.company.filechecksumservice;
 
 import com.company.filechecksumservice.configuration.ApplicationConfiguration;
+import com.company.filechecksumservice.interfaces.web.FileSecurityConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @SpringBootApplication
-@EnableR2dbcRepositories(basePackages = "com.company.filechecksumservice.infrastructure.r2dbc")
-@Import(ApplicationConfiguration.class)
+@Import({ApplicationConfiguration.class, FileSecurityConfiguration.class})
 public class FilechecksumserviceApplication {
 
 	public static void main(String[] args) {
