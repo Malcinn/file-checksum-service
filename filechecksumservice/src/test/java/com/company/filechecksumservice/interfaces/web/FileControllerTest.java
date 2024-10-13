@@ -78,7 +78,7 @@ public class FileControllerTest {
     public void shouldReturn201WhenMultipleFilesAreUploaded() {
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("files", new ClassPathResource("test.txt"));
-        builder.part("files", new ClassPathResource("test2.txt"));
+        builder.part("files", new ClassPathResource("Domain_Driven_Design_Quickly.pdf"));
 
         webTestClient.post().uri(FILE_API)
                 .headers(apiConsumerCredentials())

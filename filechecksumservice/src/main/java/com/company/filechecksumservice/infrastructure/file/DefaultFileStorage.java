@@ -7,6 +7,6 @@ import java.io.InputStream;
 public class DefaultFileStorage implements FileStorage {
     @Override
     public Mono<Void> store(String location, InputStream content) {
-        return null;
+        return Mono.empty();
     }
 }
