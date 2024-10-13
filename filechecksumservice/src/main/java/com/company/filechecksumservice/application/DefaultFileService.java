@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class DefaultFileService implements FileService {
 
-    private Logger LOGGER = LoggerFactory.getLogger(DefaultFileService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DefaultFileService.class);
 
     private final Checksum checksum;
 
@@ -28,17 +28,17 @@ public class DefaultFileService implements FileService {
     @Override
     @Transactional
     public Mono<File> save(FilePart filePart) {
-        if (Objects.nonNull(filePart)) {
-            return checksum.calculate(filePart).log()
-                    .zipWith(getFileSize(filePart), (checksum, fileSize) ->
-                            new File(null, filePart.name(), fileSize, HexFormat.of().formatHex(checksum)))
-                    .map(fileRepository::store)
-                    .flatMap(file -> file);
+        if (Objects.isNull(filePart)) {
+            return Mono.error(() -> {
+                LOGGER.error("filePart param is empty");
+                return new IllegalArgumentException("filePart param is empty");
+            });
         }
-        return Mono.error(() -> {
-            LOGGER.error("filePart param is empty");
-            return new IllegalArgumentException("filePart param is empty");
-        });
+        return checksum.calculate(filePart).log()
+                .zipWith(getFileSize(filePart), (checksum, fileSize) ->
+                        new File(null, filePart.name(), fileSize, HexFormat.of().formatHex(checksum)))
+                .map(fileRepository::store)
+                .flatMap(file -> file);
     }
 
     private Mono<Long> getFileSize(FilePart part) {

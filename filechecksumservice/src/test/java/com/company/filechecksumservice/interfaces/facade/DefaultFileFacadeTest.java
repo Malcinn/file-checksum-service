@@ -2,6 +2,7 @@ package com.company.filechecksumservice.interfaces.facade;
 
 import com.company.filechecksumservice.application.Checksum;
 import com.company.filechecksumservice.application.FileService;
+import com.company.filechecksumservice.domain.File;
 import com.company.filechecksumservice.infrastructure.file.FileStorage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,7 @@ import reactor.test.StepVerifier;
 public class DefaultFileFacadeTest {
 
     @InjectMocks
-    private DefaultFileFacade underTest;
+    private DefaultFileFacade underTests;
 
     @Mock
     private Checksum checksum;
@@ -31,19 +32,44 @@ public class DefaultFileFacadeTest {
     @Mock
     private FileService fileService;
 
+    @Mock
     private FileStorage fileStorage;
 
-    //@Test
-    public void verifySteps() {
+
+    @Test
+    public void shouldReturnErrorIfFilePartIsEmpty() {
+        StepVerifier.create(underTests.load(null))
+                .expectError(IllegalArgumentException.class)
+                .verify();
+    }
+
+    @Test
+    public void shouldReturnFileIfFilePartIsComplete() {
         FilePart filePart = Mockito.mock(FilePart.class);
         Resource resource = new ClassPathResource("test.txt");
         Flux<DataBuffer> fileContent = DataBufferUtils.read(resource, new DefaultDataBufferFactory(), 1024);
         Mockito.when(filePart.content()).thenReturn(fileContent);
         Mockito.when(filePart.name()).thenReturn("test_name");
+        Mockito.when(fileService.save(Mockito.any())).thenReturn(Mono.just(new File()));
+        Mockito.when(fileStorage.store(Mockito.anyString(), Mockito.any())).thenReturn(Mono.empty());
 
-        Mono<Void> mono = underTest.load(filePart);
-
-
+        StepVerifier.create(underTests.load(filePart))
+                .expectNextCount(0)
+                .expectComplete()
+                .verify();
     }
 
+    @Test
+    public void shouldReturnErrorIfFileServiceFinishWithError() {
+        FilePart filePart = Mockito.mock(FilePart.class);
+        Resource resource = new ClassPathResource("test.txt");
+        Flux<DataBuffer> fileContent = DataBufferUtils.read(resource, new DefaultDataBufferFactory(), 1024);
+        Mockito.when(filePart.content()).thenReturn(fileContent);
+        Mockito.when(filePart.name()).thenReturn("test_name");
+        Mockito.when(fileService.save(Mockito.any())).thenReturn(Mono.error(IllegalArgumentException::new));
+
+        StepVerifier.create(underTests.load(null))
+                .expectError(IllegalArgumentException.class)
+                .verify();
+    }
 }

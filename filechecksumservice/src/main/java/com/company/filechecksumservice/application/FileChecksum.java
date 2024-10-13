@@ -1,13 +1,18 @@
 package com.company.filechecksumservice.application;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Mono;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 public class FileChecksum implements Checksum {
+
+    private Logger LOGGER = LoggerFactory.getLogger(FileChecksum.class);
 
     private static final String DEFAULT_ALGORITHM = "MD5";
 
@@ -19,7 +24,13 @@ public class FileChecksum implements Checksum {
 
     @Override
     public Mono<byte[]> calculate(FilePart part) {
-        return part.content()
+        if (Objects.isNull(part)) {
+            return Mono.error(() -> {
+                LOGGER.error("filePart param is empty");
+                return new IllegalArgumentException("filePart param is empty");
+            });
+        }
+        return part.content().log()
                 .map(dataBuffer -> {
                     try {
                         MessageDigest messageDigest = MessageDigest.getInstance(algorithm);

@@ -1,4 +1,4 @@
-package application;
+package com.company.filechecksumservice.application;
 
 import com.company.filechecksumservice.application.Checksum;
 import com.company.filechecksumservice.application.DefaultFileService;
