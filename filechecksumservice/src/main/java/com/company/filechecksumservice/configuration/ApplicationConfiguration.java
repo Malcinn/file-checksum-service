@@ -9,23 +9,17 @@ import com.company.filechecksumservice.infrastructure.file.DefaultFileStorage;
 import com.company.filechecksumservice.infrastructure.file.FileStorage;
 import com.company.filechecksumservice.interfaces.facade.DefaultFileFacade;
 import com.company.filechecksumservice.interfaces.facade.FileFacade;
-import io.r2dbc.spi.ConnectionFactory;
-import liquibase.Liquibase;
-import liquibase.database.LiquibaseTableNames;
-import liquibase.database.core.H2Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @Configuration
 @EnableR2dbcRepositories(basePackages = "com.company.filechecksumservice.infrastructure.r2dbc")
 @PropertySource("classpath:application.properties")
 public class ApplicationConfiguration {
-
 
 
     @Autowired

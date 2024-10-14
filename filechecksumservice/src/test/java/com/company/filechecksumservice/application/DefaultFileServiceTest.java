@@ -1,7 +1,5 @@
 package com.company.filechecksumservice.application;
 
-import com.company.filechecksumservice.application.Checksum;
-import com.company.filechecksumservice.application.DefaultFileService;
 import com.company.filechecksumservice.domain.File;
 import com.company.filechecksumservice.domain.FileRepository;
 import org.junit.jupiter.api.Test;

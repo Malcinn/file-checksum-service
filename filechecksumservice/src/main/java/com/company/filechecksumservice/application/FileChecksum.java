@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class FileChecksum implements Checksum {
 
-    private Logger LOGGER = LoggerFactory.getLogger(FileChecksum.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileChecksum.class);
 
     private static final String DEFAULT_ALGORITHM = "MD5";
 

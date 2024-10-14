@@ -24,7 +24,6 @@ public class FileSecurityConfiguration {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange((authorize) ->
                         authorize.pathMatchers("/").permitAll()
-                                .pathMatchers("/h2-console").permitAll()
                                 .anyExchange().authenticated()
                 ).httpBasic(withDefaults());
         return http.build();

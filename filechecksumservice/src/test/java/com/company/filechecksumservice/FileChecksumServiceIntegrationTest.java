@@ -1,10 +1,8 @@
 package com.company.filechecksumservice;
 
 import com.company.filechecksumservice.configuration.ApplicationConfiguration;
-import com.company.filechecksumservice.domain.File;
 import com.company.filechecksumservice.infrastructure.r2dbc.R2DBCFileRepository;
 import io.r2dbc.spi.ConnectionFactoryOptions;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +21,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import reactor.test.StepVerifier;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
