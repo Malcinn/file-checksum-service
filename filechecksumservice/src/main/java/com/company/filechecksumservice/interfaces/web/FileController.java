@@ -35,7 +35,6 @@ public class FileController {
                 .doOnNext(fileFacade::load)
                 .doOnError(throwable -> LOGGER.error("Error occurred during loading file, message: {} ", throwable.getMessage()))
                 .thenEmpty(Subscriber::onComplete);
-
     }
 
 

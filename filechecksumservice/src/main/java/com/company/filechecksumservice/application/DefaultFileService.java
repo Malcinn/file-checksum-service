@@ -4,12 +4,12 @@ import com.company.filechecksumservice.domain.File;
 import com.company.filechecksumservice.domain.FileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Mono;
 
 import java.util.HexFormat;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class DefaultFileService implements FileService {
 
@@ -41,6 +41,7 @@ public class DefaultFileService implements FileService {
     }
 
     private Mono<Long> getFileSize(FilePart part) {
-        return part.content().map(DataBuffer::readableByteCount).reduce(0L, Long::sum);
+        return part.content().map(dataBuffer -> (long) dataBuffer.readableByteCount())
+                .reduce(0L, Long::sum);
     }
 }

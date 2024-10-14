@@ -21,6 +21,7 @@ import org.testcontainers.containers.PostgreSQLR2DBCDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import reactor.test.StepVerifier;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -80,10 +81,11 @@ public class FileChecksumServiceIntegrationTest {
                 .expectAll(responseSpec -> {
                     responseSpec.expectStatus().isEqualTo(201);
                 });
-
-        List<File> files = repository.findByNameContaining("single_").collectList().block();
-        Assertions.assertNotNull(files);
-        Assertions.assertEquals(1, files.size());
+        
+        StepVerifier.create(repository.findByNameContaining("single_"))
+                .expectNextCount(1)
+                .expectComplete()
+                .verify();
     }
 
     @Test
@@ -102,9 +104,10 @@ public class FileChecksumServiceIntegrationTest {
                     responseSpec.expectStatus().isEqualTo(201);
                 });
 
-        List<File> files = repository.findByNameContaining("multi_").collectList().block();
-        Assertions.assertNotNull(files);
-        Assertions.assertEquals(2, files.size());
+        StepVerifier.create(repository.findByNameContaining("multi_"))
+                .expectNextCount(2)
+                .expectComplete()
+                .verify();
     }
 
     private Consumer<HttpHeaders> apiConsumerCredentials() {
