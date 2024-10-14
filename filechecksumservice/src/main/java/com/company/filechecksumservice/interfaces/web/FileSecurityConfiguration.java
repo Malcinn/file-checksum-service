@@ -23,7 +23,9 @@ public class FileSecurityConfiguration {
         http.cors(Customizer.withDefaults())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange((authorize) ->
-                        authorize.anyExchange().authenticated()
+                        authorize.pathMatchers("/").permitAll()
+                                .pathMatchers("/h2-console").permitAll()
+                                .anyExchange().authenticated()
                 ).httpBasic(withDefaults());
         return http.build();
     }

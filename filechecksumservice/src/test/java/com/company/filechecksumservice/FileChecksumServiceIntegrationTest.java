@@ -81,7 +81,7 @@ public class FileChecksumServiceIntegrationTest {
                 .expectAll(responseSpec -> {
                     responseSpec.expectStatus().isEqualTo(201);
                 });
-        
+
         StepVerifier.create(repository.findByNameContaining("single_"))
                 .expectNextCount(1)
                 .expectComplete()

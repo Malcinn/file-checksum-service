@@ -28,7 +28,6 @@ dependencies {
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.liquibase:liquibase-core'
 	//jdbc used by liquibase
@@ -43,11 +42,6 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 
-//	testImplementation 'org.testcontainers:mysql'
-//	testImplementation 'org.testcontainers:r2dbc'
-//	testRuntimeOnly 'io.asyncer:r2dbc-mysql'
-//	testRuntimeOnly 'com.mysql:mysql-connector-j'
-
 	testRuntimeOnly 'org.postgresql:postgresql'
 	testRuntimeOnly 'org.postgresql:r2dbc-postgresql'
 	testImplementation 'org.testcontainers:postgresql'
@@ -55,6 +49,7 @@ dependencies {
 
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
 tasks.named('test') {
